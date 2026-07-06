@@ -10,7 +10,7 @@ import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
-from sklearn.metrics.pairwise import cosine_similarity
+
 
 try:
     from pymarc.marcxml import parse_xml_to_array
