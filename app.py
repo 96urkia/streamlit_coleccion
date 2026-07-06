@@ -728,10 +728,10 @@ def ayuda_video(clave, etiqueta):
     if not ruta or not os.path.exists(ruta):
         return
     if hasattr(st, "popover"):
-        with st.popover(f"❓ Cómo obtener «{etiqueta}»", use_container_width=False):
+        with st.popover(f"❓", use_container_width=False):
             st.video(ruta)
     else:
-        with st.expander(f"❓ Cómo obtener «{etiqueta}»"):
+        with st.expander(f"❓"):
             st.video(ruta)
 
 # ==========================================
