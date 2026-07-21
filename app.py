@@ -92,12 +92,255 @@ div[data-testid="stMetricValue"] { color: var(--spine-green-dark) !important; fo
 """, unsafe_allow_html=True)
 
 # ==========================================
+# INTERNACIONALIZACIÓN (ES / EU)
+# ==========================================
+TEXTS = {
+    'lang_label': {"es": 'Idioma', "eu": 'Hizkuntza'},
+    'tab_ficha01': {"es": 'Ficha 01', "eu": '01. Fitxa'},
+    'main_title': {"es": '📚 Gestión de la Colección', "eu": '📚 Bilduma Kudeaketa'},
+    'subtitle': {"es": 'Fichero analítico del fondo bibliotecario — Red de Bibliotecas Públicas de Navarra', "eu": 'Liburutegi-fondoaren fitxa analitikoa — Nafarroako Liburutegi Publikoen Sarea'},
+    'sb_seleccion_biblioteca': {"es": '🏢 Selección de biblioteca', "eu": '🏢 Liburutegia aukeratu'},
+    'centro_label': {"es": 'Centro:', "eu": 'Zentroa:'},
+    'poblacion_atendida': {"es": 'Población atendida: {n} hab.', "eu": 'Zerbitzatutako biztanleria: {n} biz.'},
+    'sb_carga_listados': {"es": '📂 Carga de listados', "eu": '📂 Zerrendak kargatu'},
+    'sube_ficheros': {"es": 'Sube los ficheros exportados del catálogo (.txt)', "eu": 'Katalogotik esportatutako fitxategiak igo (.txt)'},
+    'label_topo': {"es": 'Listado topográfico · **requerido**', "eu": 'Zerrenda topografikoa · **beharrezkoa**'},
+    'label_catalogo': {"es": 'Catálogo (Formato 1 / Cuerpo 1 / Orden 8) · **requerido**', "eu": 'Katalogoa (1. Formatua / 1. Gorputza / 8. Ordena) · **beharrezkoa**'},
+    'label_nunca': {"es": 'Ejemplares nunca prestados · opcional', "eu": 'Inoiz mailegatu gabeko aleak · aukerakoa'},
+    'label_mas2': {"es": 'Ejemplares más prestados · opcional', "eu": 'Gehien mailegatutako aleak · aukerakoa'},
+    'btn_analizar': {"es": '🚀 Analizar fondos', "eu": '🚀 Fondoa aztertu'},
+    'err_sube_requeridos': {"es": '⚠️ Sube los archivos requeridos.', "eu": '⚠️ Igo beharrezko fitxategiak.'},
+    'spinner_procesando': {"es": 'Procesando datos...', "eu": 'Datuak prozesatzen...'},
+    'err_no_registros': {"es": 'No se pudieron extraer registros válidos de los archivos subidos.', "eu": 'Ezin izan dira erregistro baliodunak atera igotako fitxategietatik.'},
+    'ok_datos_cargados': {"es": '✅ Datos cargados en memoria.', "eu": '✅ Datuak memorian kargatuta.'},
+    'caption_analisis_actual': {"es": 'Análisis actual: {b}', "eu": 'Uneko azterketa: {b}'},
+    'btn_cambiar_archivos': {"es": '🔄 Cambiar / volver a subir archivos', "eu": '🔄 Fitxategiak aldatu / berriz igo'},
+    'metric_total_vol': {"es": '📖 Total volúmenes', "eu": '📖 Ale kopurua guztira'},
+    'metric_indice_circ': {"es": '🪪 Índice de circulación', "eu": '🪪 Zirkulazio-indizea'},
+    'metric_edad_media': {"es": '📅 Edad media del fondo', "eu": '📅 Fondoaren batez besteko adina'},
+    'metric_docs_hab': {"es": '👥 Docs por habitante', "eu": '👥 Dokumentuak biztanleko'},
+    'huerfanos_note': {"es": 'ℹ️ Se han omitido {n} registros del topográfico por incoherencias con el catálogo.', "eu": 'ℹ️ Zerrenda topografikoko {n} erregistro alde batera utzi dira katalogoarekiko desadostasunengatik.'},
+    'tab_analisis': {"es": '📊 1. Análisis de la Colección', "eu": '📊 1. Bildumaren azterketa'},
+    'tab_compras': {"es": '🎯 2. Recomendaciones de Compra', "eu": '🎯 2. Erosketa-gomendioak'},
+    'subtab_general': {"es": '📈 A) Análisis General', "eu": '📈 A) Azterketa orokorra'},
+    'subtab_cdu': {"es": '🗂️ B) Análisis por CDU', "eu": '🗂️ B) CDUaren araberako azterketa'},
+    'subtab_signatura': {"es": '🔎 C) Análisis Profundo por Signatura', "eu": '🔎 C) Sinaduraren araberako azterketa sakona'},
+    'subheader_ifla': {"es": '⚖️ Diagnóstico según Pautas Oficiales (IFLA)', "eu": '⚖️ Diagnostikoa arau ofizialen arabera (IFLA)'},
+    'alerta_minimo': {"es": '🚨 **Alerta:** suelo mínimo absoluto IFLA es de 2.500 obras. Tienes **{n}**.', "eu": '🚨 **Abisua:** IFLAren gutxieneko muga absolutua 2.500 obra da. Zuk **{n}** dituzu.'},
+    'alerta_deficit': {"es": '⚠️ **Déficit de fondo:** recomendado {min}-{max}. Tienes **{n}** u.', "eu": '⚠️ **Fondo-gabezia:** gomendatua {min}-{max}. Zuk **{n}** un. dituzu.'},
+    'alerta_extenso': {"es": 'ℹ️ **Fondo extenso:** el rango inicial recomendado es {min}-{max}. Tienes **{n}** u.', "eu": 'ℹ️ **Fondo zabala:** hasierako tarte gomendatua {min}-{max} da. Zuk **{n}** un. dituzu.'},
+    'alerta_optimo': {"es": '✅ **Óptimo:** volumen adecuado dentro del rango ({min}-{max}).', "eu": '✅ **Optimoa:** bolumen egokia da, tartearen barruan ({min}-{max}).'},
+    'ratio_grande': {"es": '⚠️ **Colección demasiado grande:** {r} libros/persona (óptimo {opt}, máx. sugerido 3.5).', "eu": '⚠️ **Bilduma handiegia:** {r} liburu/pertsona (optimoa {opt}, gomendatutako gehienekoa 3,5).'},
+    'ratio_bajo': {"es": '⚠️ **Ratio bajo:** {r} doc/hab. (mínimo recomendado {opt}).', "eu": '⚠️ **Ratio baxua:** {r} dok./biz. (gomendatutako gutxienekoa {opt}).'},
+    'ratio_optimo': {"es": '✅ **Ratio óptimo:** {r} doc/hab.', "eu": '✅ **Ratio optimoa:** {r} dok./biz.'},
+    'head_dist_macro': {"es": '#### 📊 Distribución macroscópica', "eu": '#### 📊 Banaketa makroskopikoa'},
+    'col_seccion': {"es": 'Sección', "eu": 'Atala'},
+    'col_distribucion': {"es": 'Distribución', "eu": 'Banaketa'},
+    'head_rotacion': {"es": '#### 📈 Nivel de rotación física', "eu": '#### 📈 Errotazio fisikoaren maila'},
+    'estado_nunca': {"es": 'Nunca prestado', "eu": 'Inoiz mailegatu gabe'},
+    'estado_prestado': {"es": 'Prestado', "eu": 'Mailegatuta'},
+    'estado_muy_prestado': {"es": 'Muy prestado', "eu": 'Oso mailegatua'},
+    'col_estado': {"es": 'Estado', "eu": 'Egoera'},
+    'col_cantidad': {"es": 'Cantidad', "eu": 'Kopurua'},
+    'head_cronologia': {"es": '#### ⏳ Cronología de ediciones', "eu": '#### ⏳ Argitalpenen kronologia'},
+    'eje_anio_pub': {"es": 'Año de publicación', "eu": 'Argitalpen urtea'},
+    'subheader_cdu_secc': {"es": '🗂️ Concentración y rendimiento por secciones', "eu": '🗂️ Atalen kontzentrazioa eta errendimendua'},
+    'col_uso_rotacion': {"es": '% Uso (Rotación)', "eu": '% Erabilera (Errotazioa)'},
+    'col_anio_medio_ed': {"es": 'Año Medio Edición', "eu": 'Batez besteko argitalpen urtea'},
+    'md_analisis_adultos': {"es": '### 👨\u200d💼 Análisis sección adultos', "eu": '### 👨\u200d💼 Helduen atalaren azterketa'},
+    'chart_title_adultos': {"es": 'Adultos: volumen vs rotación por categoría', "eu": 'Helduak: bolumena vs errotazioa kategoriaka'},
+    'eje_categoria_cdu': {"es": 'Categoría / CDU', "eu": 'Kategoria / CDU'},
+    'eje_nvol': {"es": 'Nº volúmenes', "eu": 'Ale kopurua'},
+    'btn_csv_adultos': {"es": '📥 Descargar CSV (Adultos)', "eu": '📥 CSV deskargatu (Helduak)'},
+    'info_sin_datos_adultos': {"es": 'Sin datos suficientes para la sección de adultos.', "eu": 'Ez dago nahikoa daturik helduen atalerako.'},
+    'md_analisis_infantil': {"es": '### 👶 Análisis sección infantil / juvenil', "eu": '### 👶 Haur/gazte atalaren azterketa'},
+    'chart_title_infantil': {"es": 'Infantil/Juvenil: volumen vs rotación por categoría', "eu": 'Haurrak/Gazteak: bolumena vs errotazioa kategoriaka'},
+    'eje_categoria_tejuelo': {"es": 'Categoría / Tejuelo', "eu": 'Kategoria / Tejuelo'},
+    'btn_csv_infantil': {"es": '📥 Descargar CSV (Infantil)', "eu": '📥 CSV deskargatu (Haurrak)'},
+    'info_sin_datos_infantil': {"es": 'Sin datos suficientes para la sección infantil/juvenil.', "eu": 'Ez dago nahikoa daturik haur/gazte atalerako.'},
+    'subheader_sig_profundo': {"es": '🔎 Análisis profundo por signatura', "eu": '🔎 Sinaduraren araberako azterketa sakona'},
+    'radio_seccion_label': {"es": '1. Selecciona la sección:', "eu": '1. Aukeratu atala:'},
+    'opt_todo_fondo': {"es": '📚 Todo el fondo', "eu": '📚 Fondo osoa'},
+    'opt_solo_adultos': {"es": '👨\u200d💼 Solo adultos', "eu": '👨\u200d💼 Helduak soilik'},
+    'opt_solo_infantil': {"es": '👶 Solo infantil / juvenil', "eu": '👶 Haurrak/Gazteak soilik'},
+    'md_criterios': {"es": '#### 🎯 Criterios de selección y búsqueda', "eu": '#### 🎯 Hautapen eta bilaketa irizpideak'},
+    'buscar_por_label': {"es": 'Buscar por:', "eu": 'Bilatu honen arabera:'},
+    'opt_signatura': {"es": 'Signatura / CDU', "eu": 'Sinadura / CDU'},
+    'opt_titulo': {"es": 'Título', "eu": 'Izenburua'},
+    'opt_autor': {"es": 'Autor', "eu": 'Egilea'},
+    'opt_materia': {"es": 'Materia', "eu": 'Gaia'},
+    'placeholder_sig': {"es": 'Ej: *(460.16)* para Navarra, 821* para literatura', "eu": 'Adib.: *(460.16)* Nafarroarako, 821* literaturarako'},
+    'placeholder_generic': {"es": 'Escribe el texto a buscar · admite comodines (*)', "eu": 'Idatzi bilatu beharreko testua · komodinak onartzen ditu (*)'},
+    'buscar_campo_label': {"es": '⌨️ Buscar ({campo}):', "eu": '⌨️ Bilatu ({campo}):'},
+    'historial_prestamos_label': {"es": '🪪 Historial préstamos:', "eu": '🪪 Mailegu historiala:'},
+    'opt_todos': {"es": 'Todos', "eu": 'Guztiak'},
+    'opt_nunca_prestado': {"es": 'Nunca prestado (0)', "eu": 'Inoiz mailegatu gabe (0)'},
+    'opt_prestamo_estandar': {"es": 'Préstamo estándar (1)', "eu": 'Mailegu estandarra (1)'},
+    'opt_alta_demanda': {"es": 'Alta demanda (2)', "eu": 'Eskari handikoa (2)'},
+    'categoria_principal_label': {"es": '🗂️ Categoría principal:', "eu": '🗂️ Kategoria nagusia:'},
+    'opt_todas': {"es": 'Todas', "eu": 'Guztiak'},
+    'subsignatura_label': {"es": '🔎 Sub-signatura de la categoría:', "eu": '🔎 Kategoriaren azpi-sinadura:'},
+    'resultados_encontrados': {"es": '**Resultados encontrados: {n} documentos**', "eu": '**Aurkitutako emaitzak: {n} dokumentu**'},
+    'resumen_seleccion': {"es": '##### Σ Resumen de la selección', "eu": '##### Σ Hautapenaren laburpena'},
+    'metric_nvol2': {"es": 'Nº volúmenes', "eu": 'Ale kopurua'},
+    'metric_pct_prestamos': {"es": '% préstamos', "eu": '% maileguak'},
+    'metric_anio_medio': {"es": 'Año medio', "eu": 'Batez besteko urtea'},
+    'sin_datos': {"es": 'Sin datos', "eu": 'Daturik ez'},
+    'info_modifica_criterios': {"es": 'ℹ️ Modifica los criterios de búsqueda para calcular los indicadores del fondo.', "eu": 'ℹ️ Aldatu bilaketa-irizpideak fondoaren adierazleak kalkulatzeko.'},
+    'col_autor': {"es": 'Autor', "eu": 'Egilea'},
+    'col_signatura': {"es": 'Signatura', "eu": 'Sinadura'},
+    'col_titulo': {"es": 'Título', "eu": 'Izenburua'},
+    'col_anio': {"es": 'Año', "eu": 'Urtea'},
+    'col_categoria': {"es": 'Categoría', "eu": 'Kategoria'},
+    'col_prestamos': {"es": 'Préstamos', "eu": 'Maileguak'},
+    'btn_csv_todos': {"es": '📥 Descargar CSV (todos los resultados)', "eu": '📥 CSV deskargatu (emaitza guztiak)'},
+    'filas_pagina_label': {"es": 'Filas por página:', "eu": 'Errenkadak orriko:'},
+    'pagina_label': {"es": 'Página:', "eu": 'Orria:'},
+    'mostrando_caption': {"es": 'Mostrando {a}–{b} de {c}', "eu": '{a}–{b} erakusten, guztira {c}'},
+    'subtab_rec_gen': {"es": '🌐 A) Recomendaciones Generales', "eu": '🌐 A) Gomendio orokorrak'},
+    'subtab_rec_cdu': {"es": '📚 B) Recomendaciones por CDU', "eu": '📚 B) CDUaren araberako gomendioak'},
+    'subheader_rec_gen': {"es": '📈 Títulos más populares en la red ausentes en tu centro', "eu": '📈 Sarean ezagunenak diren izenburuak, zure zentroan falta direnak'},
+    'num_titulos_label': {"es": 'Número de títulos a sugerir:', "eu": 'Iradokitzeko izenburu kopurua:'},
+    'col_nbib_red': {"es": 'Nº Bibliotecas en Red', "eu": 'Sareko liburutegi kop.'},
+    'btn_csv_gen': {"es": '📥 Descargar listado general (CSV)', "eu": '📥 Zerrenda orokorra deskargatu (CSV)'},
+    'info_no_recom': {"es": 'No se encontraron recomendaciones pendientes.', "eu": 'Ez da gomendio pendienterik aurkitu.'},
+    'err_sin_conexion': {"es": 'No hay conexión activa con la base de datos.', "eu": 'Ez dago konexio aktiborik datu-basearekin.'},
+    'subheader_rec_cdu': {"es": '🎯 Sugerencias de adquisición por CDU', "eu": '🎯 CDUaren araberako eskuratze-iradokizunak'},
+    'max_subcat_label': {"es": 'Máximo por subcategoría:', "eu": 'Azpikategoriako gehienezkoa:'},
+    'anio_min_label': {"es": 'Año mínimo publicación:', "eu": 'Gutxieneko argitalpen urtea:'},
+    'filtrar_por_label': {"es": 'Filtrar por:', "eu": 'Iragazi honen arabera:'},
+    'opt_cdu': {"es": 'CDU', "eu": 'CDU'},
+    'placeholder_cdu': {"es": 'Ej: 004* para informática', "eu": 'Adib.: 004* informatikarako'},
+    'spinner_modelando': {"es": 'Modelando el embudo de categorías de la red...', "eu": 'Sareko kategorien tunela modelatzen...'},
+    'warn_no_recom_config': {"es": 'No hay recomendaciones con la configuración de años actual.', "eu": 'Ez dago gomendiorik uneko urte-konfigurazioarekin.'},
+    'info_sin_coincidencia': {"es": 'ℹ️ Ninguna sugerencia de la red coincide con el filtro introducido.', "eu": 'ℹ️ Sareko iradokizunik ez dator bat sartutako iragazkiarekin.'},
+    'tab_sec_adultos': {"es": '👨\u200d💼 Sección Adultos', "eu": '👨\u200d💼 Helduen atala'},
+    'tab_sec_infantil': {"es": '👶 Sección Infantil', "eu": '👶 Haurren atala'},
+    'expander_items': {"es": '{titulo} ({n} ítems)', "eu": '{titulo} ({n} elementu)'},
+    'col_nbib': {"es": 'Nº bibliotecas', "eu": 'Liburutegi kop.'},
+    'btn_csv_expander': {"es": '📥 CSV — {titulo}', "eu": '📥 CSV — {titulo}'},
+    'info_no_sug_adultos': {"es": 'No hay sugerencias para adultos con este filtro.', "eu": 'Ez dago helduentzako iradokizunik iragazki honekin.'},
+    'info_no_sug_infantil': {"es": 'No hay sugerencias para infantil con este filtro.', "eu": 'Ez dago haurrentzako iradokizunik iragazki honekin.'},
+    'pie_inicio': {"es": 'Selecciona tu biblioteca y sube el listado topográfico y el catálogo para empezar el análisis.', "eu": 'Aukeratu zure liburutegia eta igo zerrenda topografikoa eta katalogoa azterketa hasteko.'},
+    'dialog_ficha': {"es": 'Ficha catalográfica', "eu": 'Katalogazio-fitxa'},
+    'tab_ficha_dialog': {"es": '📇 Ficha', "eu": '📇 Fitxa'},
+    'tab_sucursales': {"es": '🏛️ Sucursales', "eu": '🏛️ Sukurtsalak'},
+    'warn_registro_no_analisis': {"es": 'Ese registro no está en el análisis actual.', "eu": 'Erregistro hori ez dago uneko azterketan.'},
+    'nota_ficha_sesion': {"es": 'Ficha generada a partir del catálogo subido para este análisis.', "eu": 'Fitxa azterketa honetarako igotako katalogotik sortua.'},
+    'warn_sin_conexion_red': {"es": 'No hay conexión activa con la base de datos de la red.', "eu": 'Ez dago sareko datu-basearekin konexio aktiborik.'},
+    'nota_ficha_red_ok': {"es": 'Ficha generada automáticamente a partir del registro de la red.', "eu": 'Fitxa automatikoki sortua sareko erregistrotik.'},
+    'nota_ficha_red_no': {"es": 'No se encontró información detallada para este registro.', "eu": 'Ez da erregistro honetarako informazio zehatzik aurkitu.'},
+    'info_sin_ejemplares_red': {"es": 'Sin ejemplares localizados en la red.', "eu": 'Ez da alerik aurkitu sarean.'},
+    'titulo_no_disponible': {"es": 'Título no disponible', "eu": 'Izenburua ez dago eskuragarri'},
+    'btn_ver_ficha': {"es": '📇 Ver ficha catalográfica ({id})', "eu": '📇 Ikusi katalogazio-fitxa ({id})'},
+    'titulo_no_detectado': {"es": 'Título no detectado', "eu": 'Izenburua ez da detektatu'},
+    'spinner_descarga_db': {"es": 'Descargando base de datos de la colección... Esto puede tardar un minuto la primera vez.', "eu": 'Bildumaren datu-basea deskargatzen... Lehen aldiz minutu bat behar dezake.'},
+    'toast_db_ok': {"es": '¡Base de datos descargada con éxito!', "eu": 'Datu-basea ondo deskargatu da!'},
+    'err_descarga_db': {"es": 'Error crítico al descargar la base de datos desde Dropbox: {e}', "eu": 'Errore kritikoa datu-basea Dropbox-etik deskargatzean: {e}'},
+    'err_conexion_sqlite': {"es": 'Error al conectar con el archivo SQLite.', "eu": 'Errorea SQLite fitxategiarekin konektatzean.'},
+    'err_sql': {"es": '❌ Error en la consulta SQL: {e}', "eu": '❌ Errorea SQL kontsultan: {e}'},
+}
+
+MENUS_ADULTOS_TR = {
+    'Ficción': {"es": '📖 Ficción Adultos (821)', "eu": '📖 Helduen fikzioa (821)'},
+    'CDU 0': {"es": '📂 CDU 0 · Generalidades', "eu": '📂 CDU 0 · Gaiak orokorrean'},
+    'CDU 1': {"es": '📂 CDU 1 · Filosofía / Psicología', "eu": '📂 CDU 1 · Filosofia / Psikologia'},
+    'CDU 2': {"es": '📂 CDU 2 · Religión / Teología', "eu": '📂 CDU 2 · Erlijioa / Teologia'},
+    'CDU 3': {"es": '📂 CDU 3 · Ciencias Sociales / Economía', "eu": '📂 CDU 3 · Gizarte Zientziak / Ekonomia'},
+    'CDU 5': {"es": '📂 CDU 5 · Ciencias Puras / Naturales', "eu": '📂 CDU 5 · Zientzia hutsak / Natur zientziak'},
+    'CDU 6': {"es": '📂 CDU 6 · Ciencias Aplicadas / Tecnología', "eu": '📂 CDU 6 · Zientzia aplikatuak / Teknologia'},
+    'CDU 7': {"es": '📂 CDU 7 · Bellas Artes / Deportes', "eu": '📂 CDU 7 · Arte ederrak / Kirolak'},
+    'CDU 8': {"es": '📂 CDU 8 · Lingüística / Literatura', "eu": '📂 CDU 8 · Hizkuntzalaritza / Literatura'},
+    'CDU 9': {"es": '📂 CDU 9 · Geografía / Historia', "eu": '📂 CDU 9 · Geografia / Historia'},
+}
+
+MENUS_INFANTIL_TR = {
+    'I0': {"es": '👶 I0 · Bebeteca', "eu": '👶 I0 · Haurtxokoa'},
+    'I1': {"es": '🧸 I1 · Hasta 8 años', "eu": '🧸 I1 · 8 urte arte'},
+    'I2': {"es": '🎒 I2 · 8 a 10 años', "eu": '🎒 I2 · 8-10 urte'},
+    'I3': {"es": '🛡️ I3 · 10 a 12 años', "eu": '🛡️ I3 · 10-12 urte'},
+    'JN': {"es": '⚡ JN · Juvenil', "eu": '⚡ JN · Gazteentzat'},
+    'I CDU 0': {"es": '📚 I CDU 0 · Generalidades', "eu": '📚 I CDU 0 · Gaiak orokorrean'},
+    'I CDU 1': {"es": '📚 I CDU 1 · Filosofía', "eu": '📚 I CDU 1 · Filosofia'},
+    'I CDU 2': {"es": '📚 I CDU 2 · Religión', "eu": '📚 I CDU 2 · Erlijioa'},
+    'I CDU 3': {"es": '📚 I CDU 3 · Ciencias Sociales', "eu": '📚 I CDU 3 · Gizarte Zientziak'},
+    'I CDU 4': {"es": '📚 I CDU 4 · Lengua', "eu": '📚 I CDU 4 · Hizkuntza'},
+    'I CDU 5': {"es": '📚 I CDU 5 · Ciencias Puras', "eu": '📚 I CDU 5 · Zientzia hutsak'},
+    'I CDU 6': {"es": '📚 I CDU 6 · Ciencias Aplicadas', "eu": '📚 I CDU 6 · Zientzia aplikatuak'},
+    'I CDU 7': {"es": '📚 I CDU 7 · Arte / Deportes', "eu": '📚 I CDU 7 · Artea / Kirolak'},
+    'I CDU 8': {"es": '📚 I CDU 8 · Literatura', "eu": '📚 I CDU 8 · Literatura'},
+    'I CDU 9': {"es": '📚 I CDU 9 · Geografía e Historia', "eu": '📚 I CDU 9 · Geografia eta Historia'},
+}
+
+
+def t(_key, **kwargs):
+    idioma = st.session_state.get("idioma", "es")
+    plantilla = TEXTS.get(_key, {}).get(idioma, _key)
+    return plantilla.format(**kwargs) if kwargs else plantilla
+
+
+def menu_adultos_label(_key):
+    idioma = st.session_state.get("idioma", "es")
+    return MENUS_ADULTOS_TR.get(_key, {}).get(idioma, _key)
+
+
+def menu_infantil_label(_key):
+    idioma = st.session_state.get("idioma", "es")
+    return MENUS_INFANTIL_TR.get(_key, {}).get(idioma, _key)
+
+
+# Traducción SOLO de visualización de las categorías CDU/signatura generadas por
+# clasificar_dinamico(). El valor interno de df["categoria"] se mantiene siempre
+# en español (es la clave real usada para agrupar, filtrar y clasificar en
+# _es_categoria_infantil / _clasificar_macro); esta tabla solo cambia lo que
+# se le muestra al usuario en euskera, sin tocar la lógica de análisis.
+CATEGORIA_LABELS_EU = {
+    "I DVD (DVD Infantil)": "I DBD (Haur DBD)",
+    "DVD Audiovisual": "DBD Ikus-entzunezkoa",
+    "IC (Comic Infantil)": "IC (Haur komikia)",
+    "C (Comic Adultos)": "C (Helduen komikia)",
+    "IP (Infantil Poesía)": "IP (Haur poesia)",
+    "IT (Infantil Teatro)": "IT (Haur antzerkia)",
+    "CDU Infantil": "CDU Haurrentzat",
+    "I0 (Infantil)": "I0 (Haurrentzat)",
+    "I1 (Infantil)": "I1 (Haurrentzat)",
+    "I2 (Infantil)": "I2 (Haurrentzat)",
+    "I3 (Infantil)": "I3 (Haurrentzat)",
+    "JN (Juvenil)": "JN (Gazteentzat)",
+    "Ficción / Narrativa": "Fikzioa / Narratiba",
+    "Poesía": "Poesia",
+    "Teatro": "Antzerkia",
+    "0 - Generalidades": "0 - Gaiak orokorrean",
+    "1 - Filosofía": "1 - Filosofia",
+    "2 - Religión": "2 - Erlijioa",
+    "3 - Ciencias Sociales": "3 - Gizarte Zientziak",
+    "4 - Lingüística": "4 - Hizkuntzalaritza",
+    "5 - Ciencias Puras": "5 - Zientzia hutsak",
+    "6 - Tecnología": "6 - Teknologia",
+    "7 - Arte / Deportes": "7 - Artea / Kirolak",
+    "8 - Literatura": "8 - Literatura",
+    "9 - Historia / Geografía": "9 - Historia / Geografia",
+    "Otros": "Beste batzuk",
+    "Sin clasificar": "Sailkatu gabe",
+}
+
+
+def traducir_categoria(cat):
+    """Devuelve la etiqueta de categoría a mostrar en el idioma activo,
+    sin alterar el valor real almacenado en el DataFrame."""
+    if st.session_state.get("idioma", "es") != "eu":
+        return cat
+    return CATEGORIA_LABELS_EU.get(cat, cat)
+
+
+# ==========================================
 # INICIALIZACIÓN DE ESTADOS DE SESIÓN
 # ==========================================
 _DEFAULTS = {
     "analizado": False,
     "resultado": None,       # (df, huerfanos, fichas_catalogo)
     "biblioteca_analisis": None,
+    "idioma": "es",
 }
 for _k, _v in _DEFAULTS.items():
     if _k not in st.session_state:
@@ -123,13 +366,13 @@ def asegurar_base_de_datos():
         debe_descargar = True
 
     if debe_descargar:
-        with st.spinner("Descargando base de datos de la colección... Esto puede tardar un minuto la primera vez."):
+        with st.spinner(t("spinner_descarga_db")):
             try:
                 urllib.request.urlretrieve(DB_URL, DB_PATH)
-                st.toast("¡Base de datos descargada con éxito!", icon="📥")
+                st.toast(t("toast_db_ok"), icon="📥")
                 return True
             except Exception as e:
-                st.error(f"Error crítico al descargar la base de datos desde Dropbox: {e}")
+                st.error(t("err_descarga_db", e=e))
                 return False
     return True
 
@@ -160,7 +403,7 @@ def obtener_conexion_db():
 if asegurar_base_de_datos():
     conn = obtener_conexion_db()
     if conn is None:
-        st.error("Error al conectar con el archivo SQLite.")
+        st.error(t("err_conexion_sqlite"))
 else:
     conn = None
 
@@ -291,7 +534,7 @@ def procesar_datos(topo_bytes, nunca_bytes, mas2_bytes, catalogo_bytes, tipo_ana
             continue
         record_id = int(cod_bar)
         signatura = campos["signatura"]
-        titulo = campos["titulo"].rstrip(" /") or "Título no detectado"
+        titulo = campos["titulo"].rstrip(" /") or t("titulo_no_detectado")
         data.append({"record_id": record_id, "signatura_real": signatura, "sig_supl": campos["sig_supl"], "titulo": titulo})
 
     df_topo = pd.DataFrame(data).drop_duplicates(subset=["record_id"])
@@ -467,7 +710,7 @@ def obtener_recomendaciones_automaticas(conexion, biblioteca, limite=50):
         params = [biblioteca.upper().strip(), int(limite)]
         return pd.read_sql_query(query, conexion, params=params)
     except Exception as e:
-        st.error(f"❌ Error en la consulta SQL: {e}")
+        st.error(t("err_sql", e=e))
         return pd.DataFrame()
 
 
@@ -561,7 +804,7 @@ CAMPOS_FICHA = {"250": "Edición", "300": "Descripción física", "490": "Serie"
 
 def render_isbd_html(signatura, autor, titulo, resto_isbd, materias, isbn, nota):
     materias_txt = " ".join(f"{i+1}. {m}." for i, m in enumerate(materias or []))
-    parrafo = f"<span>{titulo or 'Título no disponible'}</span>"
+    parrafo = f"<span>{titulo or t('titulo_no_disponible')}</span>"
     if autor:
         parrafo += f" / {autor}"
     if resto_isbd:
@@ -649,12 +892,12 @@ def obtener_ficha_sesion(id_sistema):
 def _mostrar_contenido_ficha_sesion(id_sistema):
     f = obtener_ficha_sesion(id_sistema)
     if not f:
-        st.warning("Ese registro no está en el análisis actual.")
+        st.warning(t("warn_registro_no_analisis"))
         return
     st.markdown(
         render_isbd_html(
             f["signatura"], f["autor"], f["titulo"], f.get("detalle_isbd"), f["materias"], f["isbn"],
-            "Ficha generada a partir del catálogo subido para este análisis.",
+            t("nota_ficha_sesion"),
         ),
         unsafe_allow_html=True,
     )
@@ -662,17 +905,17 @@ def _mostrar_contenido_ficha_sesion(id_sistema):
 
 def _mostrar_contenido_ficha_red(id_sistema):
     if conn is None:
-        st.warning("No hay conexión activa con la base de datos de la red.")
+        st.warning(t("warn_sin_conexion_red"))
         return
     f = obtener_ficha_red(conn, id_sistema)
-    tab_ficha, tab_sucursales = st.tabs(["📇 Ficha", "🏛️ Sucursales"])
+    tab_ficha, tab_sucursales = st.tabs([t("tab_ficha_dialog"), t("tab_sucursales")])
     with tab_ficha:
         resto = f.get("editorial") and f"{f.get('editorial')}, {f.get('anio') or ''}".strip(", ")
         st.markdown(
             render_isbd_html(
                 f.get("cdu"), f.get("autor"), f.get("titulo"), resto, f.get("materias"), f.get("isbn"),
-                "Ficha generada automáticamente a partir del registro de la red." if f.get("fuente") != "ninguno"
-                else "No se encontró información detallada para este registro.",
+                t("nota_ficha_red_ok") if f.get("fuente") != "ninguno"
+                else t("nota_ficha_red_no"),
             ),
             unsafe_allow_html=True,
         )
@@ -681,11 +924,11 @@ def _mostrar_contenido_ficha_red(id_sistema):
         if ejemplares:
             st.dataframe(pd.DataFrame(ejemplares), use_container_width=True, hide_index=True)
         else:
-            st.info("Sin ejemplares localizados en la red.")
+            st.info(t("info_sin_ejemplares_red"))
 
 
 if hasattr(st, "dialog"):
-    @st.dialog("Ficha catalográfica")
+    @st.dialog(t("dialog_ficha"))
     def abrir_ficha_dialogo(id_sistema, origen):
         if origen == "sesion":
             _mostrar_contenido_ficha_sesion(id_sistema)
@@ -693,7 +936,7 @@ if hasattr(st, "dialog"):
             _mostrar_contenido_ficha_red(id_sistema)
 else:
     def abrir_ficha_dialogo(id_sistema, origen):
-        with st.expander(f"📇 Ficha catalográfica — {id_sistema}", expanded=True):
+        with st.expander(f"{t('dialog_ficha')} — {id_sistema}", expanded=True):
             if origen == "sesion":
                 _mostrar_contenido_ficha_sesion(id_sistema)
             else:
@@ -718,7 +961,7 @@ def tabla_con_ficha(df_mostrar, key, id_col="id_sistema", origen="sesion"):
     if filas_sel:
         idx = filas_sel[0]
         id_sel = df_mostrar.iloc[idx][id_col]
-        if st.button(f"📇 Ver ficha catalográfica ({id_sel})", key=f"btn_ficha_{key}"):
+        if st.button(t("btn_ver_ficha", id=id_sel), key=f"btn_ficha_{key}"):
             abrir_ficha_dialogo(int(id_sel), origen)
 
 
@@ -764,10 +1007,10 @@ BIBLIOTECAS = {
 # ==========================================
 # CABECERA
 # ==========================================
-st.markdown('<div class="ledger-tab">Ficha 01</div>', unsafe_allow_html=True)
-st.markdown('<div class="main-title">📚 Gestión de la Colección</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="ledger-tab">{t("tab_ficha01")}</div>', unsafe_allow_html=True)
+st.markdown(f'<div class="main-title">{t("main_title")}</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">Fichero analítico del fondo bibliotecario — Red de Bibliotecas Públicas de Navarra</div>',
+    f'<div class="subtitle">{t("subtitle")}</div>',
     unsafe_allow_html=True,
 )
 
@@ -775,21 +1018,38 @@ st.markdown(
 # PANEL LATERAL (SIDEBAR)
 # ==========================================
 with st.sidebar:
-    st.header("🏢 Selección de biblioteca")
-    biblioteca_seleccionada = st.selectbox("Centro:", options=sorted(BIBLIOTECAS.keys()))
+    _idiomas_opciones = ["es", "eu"]
+    _idioma_actual = st.session_state.get("idioma", "es")
+    _idioma_sel = st.radio(
+        "🌐",
+        options=_idiomas_opciones,
+        format_func=lambda x: {"es": "🇪🇸 Español", "eu": "EU Euskara"}[x],
+        horizontal=True,
+        index=_idiomas_opciones.index(_idioma_actual),
+        key="idioma_selector",
+        label_visibility="collapsed",
+    )
+    if _idioma_sel != _idioma_actual:
+        st.session_state["idioma"] = _idioma_sel
+        st.rerun()
+
+    st.markdown("---")
+
+    st.header(t("sb_seleccion_biblioteca"))
+    biblioteca_seleccionada = st.selectbox(t("centro_label"), options=sorted(BIBLIOTECAS.keys()))
     poblacion_atendida = BIBLIOTECAS[biblioteca_seleccionada]
-    st.caption(f"Población atendida: {poblacion_atendida:,} hab.")
+    st.caption(t("poblacion_atendida", n=f"{poblacion_atendida:,}"))
 
     st.markdown("---")
 
     if not st.session_state["analizado"]:
-        st.header("📂 Carga de listados")
-        st.caption("Sube los ficheros exportados del catálogo (.txt)")
+        st.header(t("sb_carga_listados"))
+        st.caption(t("sube_ficheros"))
 
         c1, c2 = st.columns([3, 1])
         with c1:
             uploaded_topo = st.file_uploader(
-                "Listado topográfico · **requerido**", type=["txt"], key="up_topo",
+                t("label_topo"), type=["txt"], key="up_topo",
             )
         with c2:
             st.write("")
@@ -798,7 +1058,7 @@ with st.sidebar:
         c1, c2 = st.columns([3, 1])
         with c1:
             uploaded_catalogo = st.file_uploader(
-                "Catálogo (Formato 1 / Cuerpo 1 / Orden 8) · **requerido**", type=["txt"], key="up_catalogo",
+                t("label_catalogo"), type=["txt"], key="up_catalogo",
             )
         with c2:
             st.write("")
@@ -807,7 +1067,7 @@ with st.sidebar:
         c1, c2 = st.columns([3, 1])
         with c1:
             uploaded_nunca = st.file_uploader(
-                "Ejemplares nunca prestados · opcional", type=["txt"], key="up_nunca",
+                t("label_nunca"), type=["txt"], key="up_nunca",
             )
         with c2:
             st.write("")
@@ -816,7 +1076,7 @@ with st.sidebar:
         c1, c2 = st.columns([3, 1])
         with c1:
             uploaded_mas2 = st.file_uploader(
-                "Ejemplares más prestados · opcional", type=["txt"], key="up_mas2",
+                t("label_mas2"), type=["txt"], key="up_mas2",
             )
         with c2:
             st.write("")
@@ -827,11 +1087,11 @@ with st.sidebar:
         tipo_analisis = "Clasificación Mixta Estándar (CDU + Letras)"
         num_caracteres = 3
 
-        if st.button("🚀 Analizar fondos", type="primary", use_container_width=True):
+        if st.button(t("btn_analizar"), type="primary", use_container_width=True):
             if not uploaded_topo or not uploaded_catalogo:
-                st.error("⚠️ Sube los archivos requeridos.")
+                st.error(t("err_sube_requeridos"))
             else:
-                with st.spinner("Procesando datos..."):
+                with st.spinner(t("spinner_procesando")):
                     resultado = procesar_datos(
                         uploaded_topo.getvalue(),
                         uploaded_nunca.getvalue() if uploaded_nunca else None,
@@ -846,12 +1106,12 @@ with st.sidebar:
                         st.session_state["biblioteca_analisis"] = biblioteca_seleccionada
                         st.rerun()
                     else:
-                        st.error("No se pudieron extraer registros válidos de los archivos subidos.")
+                        st.error(t("err_no_registros"))
     else:
-        st.success("✅ Datos cargados en memoria.")
+        st.success(t("ok_datos_cargados"))
         if st.session_state.get("biblioteca_analisis"):
-            st.caption(f"Análisis actual: {st.session_state['biblioteca_analisis']}")
-        if st.button("🔄 Cambiar / volver a subir archivos", use_container_width=True):
+            st.caption(t("caption_analisis_actual", b=st.session_state['biblioteca_analisis']))
+        if st.button(t("btn_cambiar_archivos"), use_container_width=True):
             st.session_state["analizado"] = False
             st.session_state["resultado"] = None
             st.rerun()
@@ -869,14 +1129,14 @@ if st.session_state["analizado"] and st.session_state["resultado"] is not None:
     docs_por_habitante = total_docs / poblacion_atendida if poblacion_atendida > 0 else 0
 
     m1, m2, m3, m4 = st.columns(4)
-    m1.metric("📖 Total volúmenes", f"{total_docs:,}")
-    m2.metric("🪪 Índice de circulación", f"{pct_prestados:.1f}%")
-    m3.metric("📅 Edad media del fondo", f"{int(edad_media)}" if not np.isnan(edad_media) else "N/A")
-    m4.metric("👥 Docs por habitante", f"{docs_por_habitante:.2f}")
+    m1.metric(t("metric_total_vol"), f"{total_docs:,}")
+    m2.metric(t("metric_indice_circ"), f"{pct_prestados:.1f}%")
+    m3.metric(t("metric_edad_media"), f"{int(edad_media)}" if not np.isnan(edad_media) else "N/A")
+    m4.metric(t("metric_docs_hab"), f"{docs_por_habitante:.2f}")
 
     if huerfanos > 0:
         st.markdown(
-            f'<p class="huerfanos-note">ℹ️ Se han omitido {huerfanos} registros del topográfico por incoherencias con el catálogo.</p>',
+            f'<p class="huerfanos-note">{t("huerfanos_note", n=huerfanos)}</p>',
             unsafe_allow_html=True,
         )
 
@@ -885,19 +1145,19 @@ if st.session_state["analizado"] and st.session_state["resultado"] is not None:
 
     st.markdown("---")
 
-    pestana_analisis, pestana_compras = st.tabs(["📊 1. Análisis de la Colección", "🎯 2. Recomendaciones de Compra"])
+    pestana_analisis, pestana_compras = st.tabs([t("tab_analisis"), t("tab_compras")])
 
     # ==========================================
     # BLOQUE 1: ANÁLISIS DE LA COLECCIÓN
     # ==========================================
     with pestana_analisis:
         subtab_general, subtab_cdu, subtab_signatura = st.tabs(
-            ["📈 A) Análisis General", "🗂️ B) Análisis por CDU", "🔎 C) Análisis Profundo por Signatura"]
+            [t("subtab_general"), t("subtab_cdu"), t("subtab_signatura")]
         )
 
         # ---------- A) ANÁLISIS GENERAL ----------
         with subtab_general:
-            st.subheader("⚖️ Diagnóstico según Pautas Oficiales (IFLA)")
+            st.subheader(t("subheader_ifla"))
 
             if poblacion_atendida <= 5000:
                 pauta_hab, pauta_min, pauta_max = 2.5, 4000, 5500
@@ -915,147 +1175,163 @@ if st.session_state["analizado"] and st.session_state["resultado"] is not None:
             col_al1, col_al2 = st.columns(2)
             with col_al1:
                 if total_docs < 2500:
-                    st.error(f"🚨 **Alerta:** suelo mínimo absoluto IFLA es de 2.500 obras. Tienes **{total_docs:,}**.")
+                    st.error(t("alerta_minimo", n=f"{total_docs:,}"))
                 elif total_docs < pauta_min:
-                    st.warning(f"⚠️ **Déficit de fondo:** recomendado {pauta_min:,}-{pauta_max:,}. Tienes **{total_docs:,}** u.")
+                    st.warning(t("alerta_deficit", min=f"{pauta_min:,}", max=f"{pauta_max:,}", n=f"{total_docs:,}"))
                 elif total_docs > pauta_max:
-                    st.info(f"ℹ️ **Fondo extenso:** el rango inicial recomendado es {pauta_min:,}-{pauta_max:,}. Tienes **{total_docs:,}** u.")
+                    st.info(t("alerta_extenso", min=f"{pauta_min:,}", max=f"{pauta_max:,}", n=f"{total_docs:,}"))
                 else:
-                    st.success(f"✅ **Óptimo:** volumen adecuado dentro del rango ({pauta_min:,}-{pauta_max:,}).")
+                    st.success(t("alerta_optimo", min=f"{pauta_min:,}", max=f"{pauta_max:,}"))
             with col_al2:
                 if docs_por_habitante > 3.5:
-                    st.warning(f"⚠️ **Colección demasiado grande:** {docs_por_habitante:.2f} libros/persona (óptimo {pauta_hab}, máx. sugerido 3.5).")
+                    st.warning(t("ratio_grande", r=f"{docs_por_habitante:.2f}", opt=pauta_hab))
                 elif docs_por_habitante < pauta_hab:
-                    st.warning(f"⚠️ **Ratio bajo:** {docs_por_habitante:.2f} doc/hab. (mínimo recomendado {pauta_hab}).")
+                    st.warning(t("ratio_bajo", r=f"{docs_por_habitante:.2f}", opt=pauta_hab))
                 else:
-                    st.success(f"✅ **Ratio óptimo:** {docs_por_habitante:.2f} doc/hab.")
+                    st.success(t("ratio_optimo", r=f"{docs_por_habitante:.2f}"))
 
-            st.write("#### 📊 Distribución macroscópica")
+            st.write(t("head_dist_macro"))
             macro_counts = df_completo["macro_seccion"].value_counts()
+            _macro_keys = ["Adultos", "Infantil/Juvenil", "Audiovisuales"]
+            _macro_labels = {
+                "Adultos": {"es": "Adultos", "eu": "Helduak"},
+                "Infantil/Juvenil": {"es": "Infantil/Juvenil", "eu": "Haurrak/Gazteak"},
+                "Audiovisuales": {"es": "Audiovisuales", "eu": "Ikus-entzunezkoak"},
+            }
+            _idioma_actual2 = st.session_state.get("idioma", "es")
             tabla_macro = pd.DataFrame({
-                "Sección": ["Adultos", "Infantil/Juvenil", "Audiovisuales"],
-                "Distribución": [
+                t("col_seccion"): [_macro_labels[k][_idioma_actual2] for k in _macro_keys],
+                t("col_distribucion"): [
                     f"{(macro_counts.get(n, 0) / total_docs * 100):.1f}%" if total_docs else "0.0%"
-                    for n in ["Adultos", "Infantil/Juvenil", "Audiovisuales"]
+                    for n in _macro_keys
                 ],
             })
             st.dataframe(tabla_macro, use_container_width=True, hide_index=True)
 
-            st.write("#### 📈 Nivel de rotación física")
-            status_map = {0: "Nunca prestado", 1: "Prestado", 2: "Muy prestado"}
+            st.write(t("head_rotacion"))
+            status_map = {0: t("estado_nunca"), 1: t("estado_prestado"), 2: t("estado_muy_prestado")}
             status_counts = df_completo["prestamos"].map(status_map).value_counts().reset_index()
-            status_counts.columns = ["Estado", "Cantidad"]
+            status_counts.columns = [t("col_estado"), t("col_cantidad")]
             fig_pie = px.pie(
-                status_counts, values="Cantidad", names="Estado", hole=0.4,
+                status_counts, values=t("col_cantidad"), names=t("col_estado"), hole=0.4,
                 color_discrete_sequence=["#2F5233", "#B08D3E", "#A23B2E"],
             )
             st.plotly_chart(fig_pie, use_container_width=True)
 
-            st.write("#### ⏳ Cronología de ediciones")
+            st.write(t("head_cronologia"))
             if not df_completo["year"].dropna().empty:
                 fig_hist = px.histogram(
-                    df_completo, x="year", nbins=25, labels={"year": "Año de publicación"},
+                    df_completo, x="year", nbins=25, labels={"year": t("eje_anio_pub")},
                     color_discrete_sequence=["#2F5233"],
                 )
                 st.plotly_chart(fig_hist, use_container_width=True)
 
         # ---------- B) ANÁLISIS POR CDU ----------
         with subtab_cdu:
-            st.subheader("🗂️ Concentración y rendimiento por secciones")
+            st.subheader(t("subheader_cdu_secc"))
 
             df_metrics = df_completo.groupby("categoria").agg(
                 Volumenes=("record_id", "count"), Prestados=("prestado", "sum"), Anio_Medio=("year", "mean"),
             ).reset_index()
-            df_metrics["% Uso (Rotación)"] = (df_metrics["Prestados"] / df_metrics["Volumenes"] * 100).round(1)
-            df_metrics["Año Medio Edición"] = df_metrics["Anio_Medio"].fillna(0).astype(int)
+            df_metrics[t("col_uso_rotacion")] = (df_metrics["Prestados"] / df_metrics["Volumenes"] * 100).round(1)
+            df_metrics[t("col_anio_medio_ed")] = df_metrics["Anio_Medio"].fillna(0).astype(int)
             df_metrics["es_infantil"] = df_metrics["categoria"].apply(_es_categoria_infantil)
+            # Columna solo de visualización con la categoría traducida (el
+            # agrupado/filtrado real ya se hizo arriba sobre "categoria" en español).
+            df_metrics[t("col_categoria")] = df_metrics["categoria"].apply(traducir_categoria)
 
             df_adultos = df_metrics[~df_metrics["es_infantil"]].sort_values(by="Volumenes", ascending=False)
             df_infantil = df_metrics[df_metrics["es_infantil"]].sort_values(by="Volumenes", ascending=False)
 
-            st.markdown("### 👨‍💼 Análisis sección adultos")
+            st.markdown(t("md_analisis_adultos"))
             if not df_adultos.empty:
                 fig_bar_adultos = px.bar(
-                    df_adultos, x="categoria", y="Volumenes", color="% Uso (Rotación)",
-                    title="Adultos: volumen vs rotación por categoría", color_continuous_scale="Greens",
-                    labels={"categoria": "Categoría / CDU", "Volumenes": "Nº volúmenes"},
+                    df_adultos, x=t("col_categoria"), y="Volumenes", color=t("col_uso_rotacion"),
+                    title=t("chart_title_adultos"), color_continuous_scale="Greens",
+                    labels={t("col_categoria"): t("eje_categoria_cdu"), "Volumenes": t("eje_nvol")},
                 )
                 st.plotly_chart(fig_bar_adultos, use_container_width=True)
-                tabla_ad = df_adultos[["categoria", "Volumenes", "% Uso (Rotación)", "Año Medio Edición"]]
+                tabla_ad = df_adultos[[t("col_categoria"), "Volumenes", t("col_uso_rotacion"), t("col_anio_medio_ed")]]
                 st.dataframe(tabla_ad, use_container_width=True, hide_index=True)
                 st.download_button(
-                    "📥 Descargar CSV (Adultos)", tabla_ad.to_csv(index=False, sep=";", encoding="utf-8-sig"),
+                    t("btn_csv_adultos"), tabla_ad.to_csv(index=False, sep=";", encoding="utf-8-sig"),
                     "analisis_cdu_adultos.csv", "text/csv", key="csv_cdu_adultos",
                 )
             else:
-                st.info("Sin datos suficientes para la sección de adultos.")
+                st.info(t("info_sin_datos_adultos"))
 
-            st.markdown("### 👶 Análisis sección infantil / juvenil")
+            st.markdown(t("md_analisis_infantil"))
             if not df_infantil.empty:
                 fig_bar_infantil = px.bar(
-                    df_infantil, x="categoria", y="Volumenes", color="% Uso (Rotación)",
-                    title="Infantil/Juvenil: volumen vs rotación por categoría", color_continuous_scale="Oranges",
-                    labels={"categoria": "Categoría / Tejuelo", "Volumenes": "Nº volúmenes"},
+                    df_infantil, x=t("col_categoria"), y="Volumenes", color=t("col_uso_rotacion"),
+                    title=t("chart_title_infantil"), color_continuous_scale="Oranges",
+                    labels={t("col_categoria"): t("eje_categoria_tejuelo"), "Volumenes": t("eje_nvol")},
                 )
                 st.plotly_chart(fig_bar_infantil, use_container_width=True)
-                tabla_inf = df_infantil[["categoria", "Volumenes", "% Uso (Rotación)", "Año Medio Edición"]]
+                tabla_inf = df_infantil[[t("col_categoria"), "Volumenes", t("col_uso_rotacion"), t("col_anio_medio_ed")]]
                 st.dataframe(tabla_inf, use_container_width=True, hide_index=True)
                 st.download_button(
-                    "📥 Descargar CSV (Infantil)", tabla_inf.to_csv(index=False, sep=";", encoding="utf-8-sig"),
+                    t("btn_csv_infantil"), tabla_inf.to_csv(index=False, sep=";", encoding="utf-8-sig"),
                     "analisis_cdu_infantil.csv", "text/csv", key="csv_cdu_infantil",
                 )
             else:
-                st.info("Sin datos suficientes para la sección infantil/juvenil.")
+                st.info(t("info_sin_datos_infantil"))
 
         # ---------- C) ANÁLISIS PROFUNDO POR SIGNATURA ----------
         with subtab_signatura:
-            st.subheader("🔎 Análisis profundo por signatura")
+            st.subheader(t("subheader_sig_profundo"))
 
             filtro_pub = st.radio(
-                "1. Selecciona la sección:", ["📚 Todo el fondo", "👨‍💼 Solo adultos", "👶 Solo infantil / juvenil"],
+                t("radio_seccion_label"), ["todo", "adultos", "infantil"],
+                format_func=lambda x: {"todo": t("opt_todo_fondo"), "adultos": t("opt_solo_adultos"), "infantil": t("opt_solo_infantil")}[x],
                 horizontal=True, key="sig_filtro_pub",
             )
             df_nivel1 = df_completo.copy()
-            if "adultos" in filtro_pub.lower():
+            if filtro_pub == "adultos":
                 df_nivel1 = df_nivel1[~df_nivel1["es_infantil"]]
-            elif "infantil" in filtro_pub.lower():
+            elif filtro_pub == "infantil":
                 df_nivel1 = df_nivel1[df_nivel1["es_infantil"]]
 
             st.markdown("---")
-            st.markdown("#### 🎯 Criterios de selección y búsqueda")
+            st.markdown(t("md_criterios"))
 
             col_campo, col_busqueda, col_prestamos = st.columns([1, 2, 1])
             with col_campo:
                 campo_busqueda_sig = st.selectbox(
-                    "Buscar por:", ["signatura", "titulo", "autor", "materia"],
-                    format_func=lambda x: {"signatura": "Signatura / CDU", "titulo": "Título", "autor": "Autor", "materia": "Materia"}[x],
+                    t("buscar_por_label"), ["signatura", "titulo", "autor", "materia"],
+                    format_func=lambda x: {"signatura": t("opt_signatura"), "titulo": t("opt_titulo"), "autor": t("opt_autor"), "materia": t("opt_materia")}[x],
                     key="sig_campo",
                 )
             with col_busqueda:
                 placeholder = (
-                    "Ej: *(460.16)* para Navarra, 821* para literatura" if campo_busqueda_sig == "signatura"
-                    else "Escribe el texto a buscar · admite comodines (*)"
+                    t("placeholder_sig") if campo_busqueda_sig == "signatura"
+                    else t("placeholder_generic")
                 )
-                busqueda_sig = st.text_input(f"⌨️ Buscar ({campo_busqueda_sig}):", value="", placeholder=placeholder, key="sig_busqueda")
+                busqueda_sig = st.text_input(t("buscar_campo_label", campo=campo_busqueda_sig), value="", placeholder=placeholder, key="sig_busqueda")
             with col_prestamos:
                 filtro_pr = st.selectbox(
-                    "🪪 Historial préstamos:", ["Todos", "Nunca prestado (0)", "Préstamo estándar (1)", "Alta demanda (2)"],
+                    t("historial_prestamos_label"), ["todos", "nunca", "estandar", "alta"],
+                    format_func=lambda x: {"todos": t("opt_todos"), "nunca": t("opt_nunca_prestado"), "estandar": t("opt_prestamo_estandar"), "alta": t("opt_alta_demanda")}[x],
                     key="sig_prestamo",
                 )
 
             col_cat1, col_cat2 = st.columns(2)
             with col_cat1:
-                opciones_cat = ["Todas"] + sorted(df_nivel1["categoria"].dropna().unique().tolist())
-                filtro_cat = st.selectbox("🗂️ Categoría principal:", opciones_cat, key="sig_categoria")
+                opciones_cat = ["__TODAS__"] + sorted(df_nivel1["categoria"].dropna().unique().tolist())
+                filtro_cat = st.selectbox(
+                    t("categoria_principal_label"), opciones_cat,
+                    format_func=lambda c: t("opt_todas") if c == "__TODAS__" else traducir_categoria(c),
+                    key="sig_categoria",
+                )
 
             df_nivel2 = df_nivel1.copy()
-            if filtro_cat != "Todas":
+            if filtro_cat != "__TODAS__":
                 df_nivel2 = df_nivel2[df_nivel2["categoria"] == filtro_cat]
 
             with col_cat2:
                 raices_existentes = df_nivel2["signatura_real"].dropna().apply(_extraer_raiz).unique()
-                opciones_sub = ["Todas"] + sorted(raices_existentes.tolist())
-                filtro_sub = st.selectbox("🔎 Sub-signatura de la categoría:", opciones_sub, key="sig_sub")
+                opciones_sub = [t("opt_todas")] + sorted(raices_existentes.tolist())
+                filtro_sub = st.selectbox(t("subsignatura_label"), opciones_sub, key="sig_sub")
 
             st.markdown("---")
 
@@ -1067,51 +1343,52 @@ if st.session_state["analizado"] and st.session_state["resultado"] is not None:
                 else:
                     df_final_expurgo = df_final_expurgo[_texto_contains_mask(df_final_expurgo[columna], busqueda_sig)]
 
-            if filtro_cat != "Todas":
+            if filtro_cat != "__TODAS__":
                 df_final_expurgo = df_final_expurgo[df_final_expurgo["categoria"] == filtro_cat]
-            if filtro_sub != "Todas":
+            if filtro_sub != t("opt_todas"):
                 df_final_expurgo = df_final_expurgo[df_final_expurgo["signatura_real"].str.upper().str.startswith(filtro_sub, na=False)]
 
-            if "Nunca" in filtro_pr:
+            if filtro_pr == "nunca":
                 df_final_expurgo = df_final_expurgo[df_final_expurgo["prestamos"] == 0]
-            elif "estándar" in filtro_pr.lower():
+            elif filtro_pr == "estandar":
                 df_final_expurgo = df_final_expurgo[df_final_expurgo["prestamos"] == 1]
-            elif "Alta" in filtro_pr:
+            elif filtro_pr == "alta":
                 df_final_expurgo = df_final_expurgo[df_final_expurgo["prestamos"] == 2]
 
             total_filtrado = len(df_final_expurgo)
-            st.markdown(f"**Resultados encontrados: {total_filtrado} documentos**")
+            st.markdown(t("resultados_encontrados", n=total_filtrado))
 
             # --- Indicadores de la selección (no es un filtro, solo informa) ---
             if total_filtrado:
                 libros_prestados = (df_final_expurgo["prestamos"] > 0).sum()
                 pct_pr = round((libros_prestados / total_filtrado) * 100, 1)
                 anios_validos = df_final_expurgo["year"].dropna()
-                anio_medio_col = int(anios_validos.mean()) if not anios_validos.empty else "Sin datos"
-                st.markdown("##### Σ Resumen de la selección")
+                anio_medio_col = int(anios_validos.mean()) if not anios_validos.empty else t("sin_datos")
+                st.markdown(t("resumen_seleccion"))
                 r1, r2, r3 = st.columns(3)
-                r1.metric("Nº volúmenes", f"{total_filtrado:,}")
-                r2.metric("% préstamos", f"{pct_pr}%")
-                r3.metric("Año medio", anio_medio_col)
+                r1.metric(t("metric_nvol2"), f"{total_filtrado:,}")
+                r2.metric(t("metric_pct_prestamos"), f"{pct_pr}%")
+                r3.metric(t("metric_anio_medio"), anio_medio_col)
             else:
-                st.info("ℹ️ Modifica los criterios de búsqueda para calcular los indicadores del fondo.")
+                st.info(t("info_modifica_criterios"))
 
             # --- CSV del conjunto filtrado completo ---
             tabla_completa = df_final_expurgo[["record_id", "signatura_real", "titulo", "year", "categoria", "prestamos"]].copy()
-            tabla_completa.columns = ["id_sistema", "Signatura", "Título", "Año", "Categoría", "Préstamos"]
+            tabla_completa["categoria"] = tabla_completa["categoria"].apply(traducir_categoria)
+            tabla_completa.columns = ["id_sistema", t("col_signatura"), t("col_titulo"), t("col_anio"), t("col_categoria"), t("col_prestamos")]
             st.download_button(
-                "📥 Descargar CSV (todos los resultados)",
+                t("btn_csv_todos"),
                 tabla_completa.to_csv(index=False, sep=";", encoding="utf-8-sig"),
                 "analisis_signatura.csv", "text/csv", key="csv_sig",
             )
 
             # --- Paginación para no cargar tablas enormes en memoria de golpe (clave con 512MB) ---
-            page_size = st.selectbox("Filas por página:", [50, 100, 250, 500], index=1, key="sig_page_size")
+            page_size = st.selectbox(t("filas_pagina_label"), [50, 100, 250, 500], index=1, key="sig_page_size")
             total_paginas = max(1, (total_filtrado - 1) // page_size + 1) if total_filtrado else 1
-            pagina = st.number_input("Página:", min_value=1, max_value=total_paginas, value=1, step=1, key="sig_page")
+            pagina = st.number_input(t("pagina_label"), min_value=1, max_value=total_paginas, value=1, step=1, key="sig_page")
             inicio = (pagina - 1) * page_size
             tabla_pagina = tabla_completa.iloc[inicio: inicio + page_size]
-            st.caption(f"Mostrando {inicio + 1}–{min(inicio + page_size, total_filtrado)} de {total_filtrado}")
+            st.caption(t("mostrando_caption", a=inicio + 1, b=min(inicio + page_size, total_filtrado), c=total_filtrado))
 
             tabla_con_ficha(tabla_pagina, key="tabla_sig", id_col="id_sistema", origen="sesion")
 
@@ -1119,59 +1396,59 @@ if st.session_state["analizado"] and st.session_state["resultado"] is not None:
     # BLOQUE 2: RECOMENDACIONES DE COMPRA
     # ==========================================
     with pestana_compras:
-        subtab_rec_gen, subtab_rec_cdu = st.tabs(["🌐 A) Recomendaciones Generales", "📚 B) Recomendaciones por CDU"])
+        subtab_rec_gen, subtab_rec_cdu = st.tabs([t("subtab_rec_gen"), t("subtab_rec_cdu")])
 
         # ---------- A) RECOMENDACIONES GENERALES ----------
         with subtab_rec_gen:
-            st.subheader("📈 Títulos más populares en la red ausentes en tu centro")
-            limite_gen = st.number_input("Número de títulos a sugerir:", min_value=5, max_value=200, value=50, step=5, key="lim_gen")
+            st.subheader(t("subheader_rec_gen"))
+            limite_gen = st.number_input(t("num_titulos_label"), min_value=5, max_value=200, value=50, step=5, key="lim_gen")
 
             if conn is not None:
                 df_rec_gen = obtener_recomendaciones_automaticas(conn, biblioteca_seleccionada, limite_gen)
                 if not df_rec_gen.empty:
                     df_rec_gen_mostrar = df_rec_gen.rename(columns={
-                        "id_sistema": "id_sistema", "titulo": "Título", "autor": "Autor",
-                        "anio": "Año", "total_bibliotecas": "Nº Bibliotecas en Red",
+                        "id_sistema": "id_sistema", "titulo": t("col_titulo"), "autor": t("col_autor"),
+                        "anio": t("col_anio"), "total_bibliotecas": t("col_nbib_red"),
                     })
                     tabla_con_ficha(df_rec_gen_mostrar, key="tabla_rec_gen", id_col="id_sistema", origen="red")
                     csv_gen = df_rec_gen_mostrar.to_csv(index=False, sep=";", encoding="utf-8-sig")
-                    st.download_button("📥 Descargar listado general (CSV)", csv_gen, "sugerencias_generales.csv", "text/csv", key="csv_gen")
+                    st.download_button(t("btn_csv_gen"), csv_gen, "sugerencias_generales.csv", "text/csv", key="csv_gen")
                 else:
-                    st.info("No se encontraron recomendaciones pendientes.")
+                    st.info(t("info_no_recom"))
             else:
-                st.error("No hay conexión activa con la base de datos.")
+                st.error(t("err_sin_conexion"))
 
         # ---------- B) RECOMENDACIONES POR CDU ----------
         with subtab_rec_cdu:
-            st.subheader("🎯 Sugerencias de adquisición por CDU")
+            st.subheader(t("subheader_rec_cdu"))
 
             if conn is None:
-                st.error("No hay conexión activa con la base de datos.")
+                st.error(t("err_sin_conexion"))
             else:
                 col_f1, col_f2 = st.columns(2)
                 with col_f1:
-                    limite_cdu = st.number_input("Máximo por subcategoría:", min_value=1, max_value=100, value=10, key="l_cdu")
+                    limite_cdu = st.number_input(t("max_subcat_label"), min_value=1, max_value=100, value=10, key="l_cdu")
                 with col_f2:
-                    anio_minimo = st.number_input("Año mínimo publicación:", min_value=1800, max_value=2026, value=2015, key="a_cdu")
+                    anio_minimo = st.number_input(t("anio_min_label"), min_value=1800, max_value=2026, value=2015, key="a_cdu")
 
                 col_campo_cdu, col_busq_cdu = st.columns([1, 2])
                 with col_campo_cdu:
                     campo_busqueda_cdu = st.selectbox(
-                        "Filtrar por:", ["cdu", "titulo", "autor", "materia"],
-                        format_func=lambda x: {"cdu": "CDU", "titulo": "Título", "autor": "Autor", "materia": "Materia"}[x],
+                        t("filtrar_por_label"), ["cdu", "titulo", "autor", "materia"],
+                        format_func=lambda x: {"cdu": t("opt_cdu"), "titulo": t("opt_titulo"), "autor": t("opt_autor"), "materia": t("opt_materia")}[x],
                         key="cdu_campo",
                     )
                 with col_busq_cdu:
-                    ph = "Ej: 004* para informática" if campo_busqueda_cdu == "cdu" else "Texto a buscar · admite comodines (*)"
-                    busqueda_cdu = st.text_input(f"⌨️ Buscar ({campo_busqueda_cdu}):", value="", placeholder=ph, key="cdu_busqueda")
+                    ph = t("placeholder_cdu") if campo_busqueda_cdu == "cdu" else t("placeholder_generic")
+                    busqueda_cdu = st.text_input(t("buscar_campo_label", campo=campo_busqueda_cdu), value="", placeholder=ph, key="cdu_busqueda")
 
                 biblioteca_norm = biblioteca_seleccionada.upper().strip()
 
-                with st.spinner("Modelando el embudo de categorías de la red..."):
+                with st.spinner(t("spinner_modelando")):
                     df_raw_cdu = cargar_base_recomendaciones_cdu(conn, biblioteca_norm, int(anio_minimo))
 
                 if df_raw_cdu.empty:
-                    st.warning("No hay recomendaciones con la configuración de años actual.")
+                    st.warning(t("warn_no_recom_config"))
                 else:
                     busqueda_cdu = busqueda_cdu.strip()
                     if busqueda_cdu:
@@ -1186,7 +1463,7 @@ if st.session_state["analizado"] and st.session_state["resultado"] is not None:
                             df_raw_cdu = df_raw_cdu[_wildcard_mask(df_raw_cdu["cdu"], busqueda_cdu.upper())]
 
                     if df_raw_cdu.empty:
-                        st.info("ℹ️ Ninguna sugerencia de la red coincide con el filtro introducido.")
+                        st.info(t("info_sin_coincidencia"))
                     else:
                         clasif = df_raw_cdu.apply(
                             lambda r: _clasificar_libro_cdu(r["cdu"], r.get("todas_signaturas", "")), axis=1
@@ -1196,50 +1473,52 @@ if st.session_state["analizado"] and st.session_state["resultado"] is not None:
                         df_raw_cdu["categoria_final"] = [c[1] for c in clasif]
                         df_raw_cdu = df_raw_cdu[df_raw_cdu["subtab_destino"].notna()].sort_values("id_red_bibliotecas", ascending=False)
 
-                        sub_adultos, sub_infantil = st.tabs(["👨‍💼 Sección Adultos", "👶 Sección Infantil"])
+                        sub_adultos, sub_infantil = st.tabs([t("tab_sec_adultos"), t("tab_sec_infantil")])
 
                         with sub_adultos:
                             hay_ad = False
-                            for k, titulo_ex in MENUS_ADULTOS.items():
+                            for k in MENUS_ADULTOS:
+                                titulo_ex = menu_adultos_label(k)
                                 g = df_raw_cdu[(df_raw_cdu["subtab_destino"] == "Adultos") & (df_raw_cdu["categoria_final"] == k)].head(limite_cdu)
                                 if not g.empty:
                                     hay_ad = True
-                                    with st.expander(f"{titulo_ex} ({len(g)} ítems)"):
+                                    with st.expander(t("expander_items", titulo=titulo_ex, n=len(g))):
                                         g_mostrar = g[["id_sistema", "titulo", "autor", "anio", "cdu", "id_red_bibliotecas"]].rename(
-                                            columns={"titulo": "Título", "autor": "Autor", "anio": "Año",
-                                                     "cdu": "CDU", "id_red_bibliotecas": "Nº bibliotecas"}
+                                            columns={"titulo": t("col_titulo"), "autor": t("col_autor"), "anio": t("col_anio"),
+                                                     "cdu": t("opt_cdu"), "id_red_bibliotecas": t("col_nbib")}
                                         )
                                         tabla_con_ficha(g_mostrar, key=f"tabla_cdu_ad_{k}", id_col="id_sistema", origen="red")
                                         st.download_button(
-                                            f"📥 CSV — {titulo_ex}", g_mostrar.to_csv(index=False, sep=";", encoding="utf-8-sig"),
+                                            t("btn_csv_expander", titulo=titulo_ex), g_mostrar.to_csv(index=False, sep=";", encoding="utf-8-sig"),
                                             f"recomendaciones_adultos_{k}.csv", "text/csv", key=f"csv_cdu_ad_{k}",
                                         )
                             if not hay_ad:
-                                st.info("No hay sugerencias para adultos con este filtro.")
+                                st.info(t("info_no_sug_adultos"))
 
                         with sub_infantil:
                             hay_inf = False
-                            for k, titulo_ex in MENUS_INFANTIL.items():
+                            for k in MENUS_INFANTIL:
+                                titulo_ex = menu_infantil_label(k)
                                 g = df_raw_cdu[(df_raw_cdu["subtab_destino"] == "Infantil") & (df_raw_cdu["categoria_final"] == k)].head(limite_cdu)
                                 if not g.empty:
                                     hay_inf = True
-                                    with st.expander(f"{titulo_ex} ({len(g)} ítems)"):
+                                    with st.expander(t("expander_items", titulo=titulo_ex, n=len(g))):
                                         g_mostrar = g[["id_sistema", "titulo", "autor", "anio", "cdu", "id_red_bibliotecas"]].rename(
-                                            columns={"titulo": "Título", "autor": "Autor", "anio": "Año",
-                                                     "cdu": "CDU", "id_red_bibliotecas": "Nº bibliotecas"}
+                                            columns={"titulo": t("col_titulo"), "autor": t("col_autor"), "anio": t("col_anio"),
+                                                     "cdu": t("opt_cdu"), "id_red_bibliotecas": t("col_nbib")}
                                         )
                                         tabla_con_ficha(g_mostrar, key=f"tabla_cdu_inf_{k}", id_col="id_sistema", origen="red")
                                         st.download_button(
-                                            f"📥 CSV — {titulo_ex}", g_mostrar.to_csv(index=False, sep=";", encoding="utf-8-sig"),
+                                            t("btn_csv_expander", titulo=titulo_ex), g_mostrar.to_csv(index=False, sep=";", encoding="utf-8-sig"),
                                             f"recomendaciones_infantil_{k}.csv", "text/csv", key=f"csv_cdu_inf_{k}",
                                         )
                             if not hay_inf:
-                                st.info("No hay sugerencias para infantil con este filtro.")
+                                st.info(t("info_no_sug_infantil"))
 
 else:
     st.markdown(
         '<p style="text-align:center; margin-top:3rem; color:var(--ink-soft);">'
-        "Selecciona tu biblioteca y sube el listado topográfico y el catálogo para empezar el análisis."
-        "</p>",
+        + t("pie_inicio")
+        + "</p>",
         unsafe_allow_html=True,
     )
