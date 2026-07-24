@@ -97,7 +97,7 @@ div[data-testid="stMetricValue"] { color: var(--spine-green-dark) !important; fo
 TEXTS = {
     'lang_label': {"es": 'Idioma', "eu": 'Hizkuntza'},
     'tab_ficha01': {"es": 'Ficha 01', "eu": '01. Fitxa'},
-    'main_title': {"es": '📚 Gestión de la Colección', "eu": '📚 Bilduma Kudeaketa'},
+    'main_title': {"es": '📚 Bildumargi', "eu": '📚 Bildumargi'},
     'sb_seleccion_biblioteca': {"es": '🏢 Selección de biblioteca', "eu": '🏢 Liburutegia aukeratu'},
     'centro_label': {"es": 'Centro:', "eu": 'Zentroa:'},
     'poblacion_atendida': {"es": 'Población atendida: {n} hab.', "eu": 'Zerbitzatutako biztanleria: {n} biz.'},
