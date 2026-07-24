@@ -21,7 +21,7 @@ except ImportError:
 # ==========================================
 # CONFIGURACIÓN DE PÁGINA
 # ==========================================
-st.set_page_config(page_title="Gestión de la Colección", page_icon="📚", layout="wide")
+st.set_page_config(page_title="Bildumargi", page_icon="📚", layout="wide")
 
 ANIO_ACTUAL = 2026
 VIDEOS_DIR = os.path.join(os.path.dirname(__file__), "videos")
